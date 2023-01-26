@@ -1,4 +1,7 @@
+import 'package:bajaroo/providers/cart.dart';
+import 'package:bajaroo/widgets/badge.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/product_grid.dart';
 
@@ -48,6 +51,16 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
               ];
             }),
           ),
+          Consumer<Cart>(
+            builder: ((_, cartData, ch) => Badge(
+                  value: cartData.itemCount.toString(),
+                  child: ch!,
+                )),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          )
         ],
         title: const Text("Bazaroo"),
       ),
