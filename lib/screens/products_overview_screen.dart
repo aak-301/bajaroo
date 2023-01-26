@@ -3,6 +3,7 @@ import 'package:bajaroo/widgets/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/routes.dart';
 import '../widgets/product_grid.dart';
 
 enum FilterOptions {
@@ -25,6 +26,18 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          Consumer<Cart>(
+            builder: ((_, cartData, ch) => Badge(
+                  value: cartData.itemCount.toString(),
+                  child: ch!,
+                )),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.cartScreen);
+              },
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          ),
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
             onSelected: (FilterOptions selectedVal) {
@@ -51,16 +64,6 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
               ];
             }),
           ),
-          Consumer<Cart>(
-            builder: ((_, cartData, ch) => Badge(
-                  value: cartData.itemCount.toString(),
-                  child: ch!,
-                )),
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.shopping_cart),
-            ),
-          )
         ],
         title: const Text("Bazaroo"),
       ),
