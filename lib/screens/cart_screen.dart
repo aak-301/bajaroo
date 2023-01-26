@@ -1,6 +1,8 @@
-import 'package:bajaroo/providers/cart.dart';
+import 'package:bajaroo/providers/cart.dart' show Cart;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -19,20 +21,42 @@ class CartScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'total',
+                    'Total',
                     style: TextStyle(fontSize: 20),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const Spacer(),
                   Chip(
-                    label: Text('₹ ${cart.totalAmt}'),
+                    label: Text(
+                      '₹ ${cart.totalAmt}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
                     backgroundColor: Colors.purple,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'ORDER NOW',
+                      style: TextStyle(color: Colors.purple),
+                    ),
                   ),
                 ],
               ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.items.length,
+              itemBuilder: (context, i) => CartItem(
+                  id: cart.items.values.toList()[i].id,
+                  price: cart.items.values.toList()[i].price,
+                  quantity: cart.items.values.toList()[i].quantity,
+                  title: cart.items.values.toList()[i].title),
             ),
           ),
         ],
