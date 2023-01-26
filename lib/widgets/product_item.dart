@@ -1,24 +1,18 @@
 import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/constants/themes.dart';
+import 'package:bajaroo/providers/cart.dart';
 import 'package:bajaroo/providers/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({
-    super.key,
-    // required this.id,
-    // required this.title,
-    // required this.imageUrl,
-  });
-
-  // final String id;
-  // final String title;
-  // final String imageUrl;
+  const ProductItem({super.key});
 
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -36,7 +30,13 @@ class ProductItem extends StatelessWidget {
             ),
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(
+                productId: product.id,
+                price: product.price,
+                title: product.title,
+              );
+            },
             icon: const Icon(
               Icons.shopping_cart,
               color: AppColors.iconColor,
