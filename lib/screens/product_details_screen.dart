@@ -1,4 +1,4 @@
-import 'package:bajaroo/providers/product.dart';
+import 'package:bajaroo/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

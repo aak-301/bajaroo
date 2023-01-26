@@ -1,6 +1,6 @@
 import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/constants/themes.dart';
-import 'package:bajaroo/providers/products.dart';
+import 'package:bajaroo/providers/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
