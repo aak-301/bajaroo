@@ -1,5 +1,5 @@
 import 'package:bajaroo/constants/routes.dart';
-import 'package:bajaroo/providers/products.dart';
+import 'package:bajaroo/providers/product.dart';
 import 'package:bajaroo/screens/product_details_screen.dart';
 import 'package:bajaroo/screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
