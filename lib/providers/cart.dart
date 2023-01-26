@@ -6,18 +6,23 @@ class CartItem {
   final int quantity;
   final double price;
 
-  CartItem(
-      {required this.id,
-      required this.price,
-      required this.quantity,
-      required this.title});
+  CartItem({
+    required this.id,
+    required this.price,
+    required this.quantity,
+    required this.title,
+  });
 }
 
 class Cart with ChangeNotifier {
-  late Map<String, CartItem> _items;
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get item {
     return {..._items};
+  }
+
+  int get itemCount {
+    return _items.length;
   }
 
   void addItem({
@@ -37,10 +42,12 @@ class Cart with ChangeNotifier {
       _items.putIfAbsent(
           productId,
           () => CartItem(
-              id: DateTime.now().toString(),
-              price: price,
-              quantity: 1,
-              title: title));
+                id: DateTime.now().toString(),
+                price: price,
+                quantity: 1,
+                title: title,
+              ));
     }
+    notifyListeners();
   }
 }
