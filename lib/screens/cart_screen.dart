@@ -1,3 +1,4 @@
+import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/providers/cart.dart' show Cart;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,9 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Colors.purple,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.orderScreen);
+                    },
                     child: const Text(
                       'ORDER NOW',
                       style: TextStyle(color: Colors.purple),

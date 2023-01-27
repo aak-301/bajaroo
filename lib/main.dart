@@ -1,7 +1,9 @@
 import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/providers/cart.dart';
+import 'package:bajaroo/providers/orders.dart';
 import 'package:bajaroo/providers/products.dart';
 import 'package:bajaroo/screens/cart_screen.dart';
+import 'package:bajaroo/screens/order_screen.dart';
 import 'package:bajaroo/screens/product_details_screen.dart';
 import 'package:bajaroo/screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Cart(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => Orders(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -36,6 +41,7 @@ class MyApp extends StatelessWidget {
         routes: {
           AppRoutes.productDetails: (context) => const ProductDetailScreen(),
           AppRoutes.cartScreen: (context) => const CartScreen(),
+          AppRoutes.orderScreen: (context) => const OrderScreen(),
         },
       ),
     );
