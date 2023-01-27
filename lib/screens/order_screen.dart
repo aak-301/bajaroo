@@ -1,15 +1,21 @@
+import 'package:bajaroo/providers/orders.dart' show Orders;
+import 'package:bajaroo/widgets/order_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final orderData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Summary'),
+        title: const Text('Order Summary'),
+      ),
+      body: ListView.builder(
+        itemBuilder: ((context, i) => OrderItem(order: orderData.orders[i])),
+        itemCount: orderData.orders.length,
       ),
     );
   }

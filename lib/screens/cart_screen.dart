@@ -1,5 +1,6 @@
 import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/providers/cart.dart' show Cart;
+import 'package:bajaroo/providers/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,10 @@ class CartScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                          cartProducts: cart.items.values.toList(),
+                          total: cart.totalAmt);
+                          cart.clearCart();
                       Navigator.of(context).pushNamed(AppRoutes.orderScreen);
                     },
                     child: const Text(
