@@ -68,7 +68,7 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
         ],
         title: const Text("Bazaroo"),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: ProductsGrid(toggleFavScreen: _showFavOnly),
     );
   }

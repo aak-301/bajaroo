@@ -1,4 +1,3 @@
-import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/providers/cart.dart' show Cart;
 import 'package:bajaroo/providers/orders.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class CartScreen extends StatelessWidget {
                   const Spacer(),
                   Chip(
                     label: Text(
-                      '₹ ${cart.totalAmt}',
+                      '₹ ${cart.totalAmt.toStringAsFixed(2)}',
                       style: const TextStyle(color: Colors.white),
                     ),
                     backgroundColor: Colors.purple,
