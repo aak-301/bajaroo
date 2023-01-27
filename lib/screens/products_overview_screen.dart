@@ -1,4 +1,5 @@
 import 'package:bajaroo/providers/cart.dart';
+import 'package:bajaroo/widgets/app_drawer.dart';
 import 'package:bajaroo/widgets/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +68,7 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
         ],
         title: const Text("Bazaroo"),
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(toggleFavScreen: _showFavOnly),
     );
   }

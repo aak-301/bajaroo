@@ -42,8 +42,7 @@ class CartScreen extends StatelessWidget {
                       Provider.of<Orders>(context, listen: false).addOrder(
                           cartProducts: cart.items.values.toList(),
                           total: cart.totalAmt);
-                          cart.clearCart();
-                      Navigator.of(context).pushNamed(AppRoutes.orderScreen);
+                      cart.clearCart();
                     },
                     child: const Text(
                       'ORDER NOW',
