@@ -6,6 +6,7 @@ import 'package:bajaroo/screens/cart_screen.dart';
 import 'package:bajaroo/screens/order_screen.dart';
 import 'package:bajaroo/screens/product_details_screen.dart';
 import 'package:bajaroo/screens/products_overview_screen.dart';
+import 'package:bajaroo/screens/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.productDetails: (context) => const ProductDetailScreen(),
           AppRoutes.cartScreen: (context) => const CartScreen(),
           AppRoutes.orderScreen: (context) => const OrderScreen(),
+          AppRoutes.userProductsScreen: (context) => const UserProductsScreen(),
         },
       ),
     );
