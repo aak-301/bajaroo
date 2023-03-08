@@ -1,3 +1,4 @@
+import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/providers/products.dart';
 import 'package:bajaroo/widgets/app_drawer.dart';
 import 'package:bajaroo/widgets/user_product_item.dart';
@@ -17,7 +18,10 @@ class UserProductsScreen extends StatelessWidget {
         title: const Text("Your Products"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .popAndPushNamed(AppRoutes.editProductsScreen);
+            },
             icon: const Icon(Icons.add),
           ),
         ],
