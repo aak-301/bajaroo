@@ -1,3 +1,4 @@
+import 'package:bajaroo/providers/product.dart';
 import 'package:flutter/material.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -12,6 +13,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _descriptionFocusNode = FocusNode();
   final _imageURLFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var _editedProduct = Product(
+    id: '',
+    description: '',
+    imageUrl: '',
+    price: 0,
+    title: '',
+  );
 
   @override
   void initState() {
@@ -35,80 +44,138 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
+  void _saveForm() {
+    _formKey.currentState?.save();
+    print(_editedProduct.title);
+    print(_editedProduct.description);
+    print(_editedProduct.price);
+    print(_editedProduct.imageUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Product"),
+        actions: [
+          IconButton(
+            onPressed: _saveForm,
+            icon: const Icon(Icons.done),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+            key: _formKey,
             child: ListView(
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Title',
-              ),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_priceFocusNode);
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Price',
-              ),
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.next,
-              focusNode: _priceFocusNode,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_descriptionFocusNode);
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Description',
-              ),
-              maxLines: 3,
-              keyboardType: TextInputType.multiline,
-              focusNode: _descriptionFocusNode,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  margin: const EdgeInsets.only(top: 8, right: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey,
-                    ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
                   ),
-                  child: _imageUrlController.text.isEmpty
-                      ? const Center(child: Text('Enter a URL'))
-                      : FittedBox(
-                          fit: BoxFit.fill,
-                          child: Image.network(_imageUrlController.text),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_priceFocusNode);
+                  },
+                  onSaved: ((newValue) {
+                    _editedProduct = Product(
+                      id: _editedProduct.id,
+                      description: _editedProduct.description,
+                      imageUrl: _editedProduct.imageUrl,
+                      price: _editedProduct.price,
+                      title: newValue!,
+                    );
+                  }),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Price',
+                  ),
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  focusNode: _priceFocusNode,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                  },
+                  onSaved: ((newValue) {
+                    _editedProduct = Product(
+                      id: _editedProduct.id,
+                      description: _editedProduct.description,
+                      imageUrl: _editedProduct.imageUrl,
+                      price: double.parse(newValue!),
+                      title: _editedProduct.title,
+                    );
+                  }),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                  ),
+                  maxLines: 3,
+                  keyboardType: TextInputType.multiline,
+                  focusNode: _descriptionFocusNode,
+                  onSaved: ((newValue) {
+                    _editedProduct = Product(
+                      id: _editedProduct.id,
+                      description: newValue!,
+                      imageUrl: _editedProduct.imageUrl,
+                      price: _editedProduct.price,
+                      title: _editedProduct.title,
+                    );
+                  }),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      margin: const EdgeInsets.only(top: 8, right: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.grey,
                         ),
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: _imageUrlController,
-                    decoration: const InputDecoration(labelText: 'Image URL'),
-                    keyboardType: TextInputType.url,
-                    textInputAction: TextInputAction.done,
-                    focusNode: _imageURLFocusNode,
-                    onEditingComplete: () => setState(() {}),
-                  ),
-                ),
+                      ),
+                      child: _imageUrlController.text.isEmpty
+                          ? const Center(child: Text('Enter a URL'))
+                          : FittedBox(
+                              fit: BoxFit.fill,
+                              child: Image.network(_imageUrlController.text),
+                            ),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: _imageUrlController,
+                        decoration:
+                            const InputDecoration(labelText: 'Image URL'),
+                        keyboardType: TextInputType.url,
+                        textInputAction: TextInputAction.done,
+                        focusNode: _imageURLFocusNode,
+                        onEditingComplete: () => setState(() {}),
+                        onFieldSubmitted: (_) {
+                          _saveForm();
+                        },
+                        onSaved: ((newValue) {
+                          _editedProduct = Product(
+                            id: _editedProduct.id,
+                            description: _editedProduct.description,
+                            imageUrl: newValue!,
+                            price: _editedProduct.price,
+                            title: _editedProduct.title,
+                          );
+                        }),
+                      ),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        )),
+            )),
       ),
     );
   }
 }
+
+
+// https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=1000&q=60
