@@ -1,6 +1,8 @@
 import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/constants/themes.dart';
+import 'package:bajaroo/providers/products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserProdoductItem extends StatelessWidget {
   const UserProdoductItem({
@@ -36,7 +38,9 @@ class UserProdoductItem extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<Products>(context,listen: false).deleteProduct(id);
+              },
               icon: const Icon(
                 Icons.delete,
                 color: AppColors.iconColor,
