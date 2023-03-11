@@ -1,14 +1,16 @@
-
+import 'package:bajaroo/constants/routes.dart';
 import 'package:bajaroo/constants/themes.dart';
 import 'package:flutter/material.dart';
 
 class UserProdoductItem extends StatelessWidget {
   const UserProdoductItem({
+    required this.id,
     required this.title,
     required this.imgUrl,
     super.key,
   });
 
+  final String id;
   final String title;
   final String imgUrl;
 
@@ -24,7 +26,10 @@ class UserProdoductItem extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.editProductsScreen, arguments: id);
+              },
               icon: Icon(
                 Icons.edit,
                 color: Theme.of(context).primaryColor,
