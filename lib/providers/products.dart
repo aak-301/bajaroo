@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bajaroo/providers/product.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   final List<Product> _items = [
@@ -50,15 +53,35 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    final newProduct = Product(
-      id: DateTime.now().toString(),
-      description: product.description,
-      imageUrl: product.imageUrl,
-      price: product.price,
-      title: product.title,
-    );
-    _items.add(newProduct);
-    notifyListeners();
+    try {
+      final url = Uri.parse(
+        'https://bajaroo-55690-default-rtdb.asia-southeast1.firebasedatabase.app/products.json',
+      );
+      http
+          .post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        }),
+      )
+          .then((response) {
+        final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          description: product.description,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          title: product.title,
+        );
+        _items.add(newProduct);
+        notifyListeners();
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   void updateProduct(String id, Product product) {
