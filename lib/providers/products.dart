@@ -52,12 +52,12 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     try {
       final url = Uri.parse(
         'https://bajaroo-55690-default-rtdb.asia-southeast1.firebasedatabase.app/products.json',
       );
-      http
+      return http
           .post(
         url,
         body: json.encode({
