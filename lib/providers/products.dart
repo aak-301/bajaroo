@@ -53,35 +53,34 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    try {
-      final url = Uri.parse(
-        'https://bajaroo-55690-default-rtdb.asia-southeast1.firebasedatabase.app/products.json',
+    final url = Uri.parse(
+      'https://bajaroo-55690-default-rtdb.asia-southeast1.firebasedatabase.app/products.json',
+    );
+    return http
+        .post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorite': product.isFavorite,
+      }),
+    )
+        .then((response) {
+      final newProduct = Product(
+        id: json.decode(response.body)['name'],
+        description: product.description,
+        imageUrl: product.imageUrl,
+        price: product.price,
+        title: product.title,
       );
-      return http
-          .post(
-        url,
-        body: json.encode({
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavorite': product.isFavorite,
-        }),
-      )
-          .then((response) {
-        final newProduct = Product(
-          id: json.decode(response.body)['name'],
-          description: product.description,
-          imageUrl: product.imageUrl,
-          price: product.price,
-          title: product.title,
-        );
-        _items.add(newProduct);
-        notifyListeners();
-      });
-    } catch (e) {
-      print(e);
-    }
+      _items.add(newProduct);
+      notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
+    });
   }
 
   void updateProduct(String id, Product product) {
